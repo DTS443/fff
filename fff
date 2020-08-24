@@ -776,7 +776,7 @@ key() {
                 ((y < max_items)) && ((y++))
 
                 print_line "$((scroll-1))"
-                printf '\n'
+                printf '\n'Fsc
                 print_line "$scroll"
                 status_line
             }
@@ -872,7 +872,7 @@ key() {
 
         # Mark all files for operation.
         "${FFF_KEY_YANK_ALL:=Y}"|\
-        "${TFF_KEY_MOVE_ALL:=M}"|\
+        "${FFF_KEY_MOVE_ALL:=M}"|\
         "${FFF_KEY_REMOVE_ALL:=R}"|\
         "${FFF_KEY_SHRED_ALL:=Z}"|\
         "${FFF_KEY_TRASH_ALL:=D}"|\
