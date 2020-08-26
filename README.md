@@ -55,6 +55,8 @@ A simple file manager written in `bash`.
     - Program handling (*non-text*).
     - *Not needed on macos and Haiku.*
     - *Customizable (if not using `xdg-open`): `$FFF_OPENER`.*
+- `shred` for permanently file deleting
+- `atool` for archive managment
 
 **Dependencies for image display**
 
