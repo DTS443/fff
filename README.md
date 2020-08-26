@@ -135,7 +135,7 @@ G: go to bottom
 
 .: toggle hidden files
 /: search
-t: go to trash
+T: go to trash
 ~: go to home
 e: refresh current dir
 !: open shell in current dir
@@ -143,10 +143,11 @@ e: refresh current dir
 x: view file/dir attributes
 i: display image with w3m-img
 
-down:  scroll down
-up:    scroll up
-left:  go to parent dir
-right: go to child dir
+L: list file in archive
+a: mark add to archive
+u: mark add to unpack
+A: mark add to archive
+U: mark all add to unpack
 
 f: new file
 n: new dir
@@ -274,12 +275,10 @@ This is the list of full keybindings along with their default values. You only n
 
 # Go to child directory.
 export FFF_KEY_CHILD1="l"
-export FFF_KEY_CHILD2=$'\e[C' # Right Arrow
 export FFF_KEY_CHILD3=""      # Enter / Return
 
 # Go to parent directory.
 export FFF_KEY_PARENT1="h"
-export FFF_KEY_PARENT2=$'\e[D' # Left Arrow
 export FFF_KEY_PARENT3=$'\177' # Backspace
 export FFF_KEY_PARENT4=$'\b'   # Backspace (Older terminals)
 
@@ -294,11 +293,9 @@ export FFF_KEY_SHELL="!"
 
 # Scroll down.
 export FFF_KEY_SCROLL_DOWN1="j"
-export FFF_KEY_SCROLL_DOWN2=$'\e[B' # Down Arrow
 
 # Scroll up.
 export FFF_KEY_SCROLL_UP1="k"
-export FFF_KEY_SCROLL_UP2=$'\e[A'   # Up Arrow
 
 # Go to top and bottom.
 export FFF_KEY_TO_TOP="g"
@@ -307,27 +304,38 @@ export FFF_KEY_TO_BOTTOM="G"
 # Go to dirs.
 export FFF_KEY_GO_DIR=":"
 export FFF_KEY_GO_HOME="~"
-export FFF_KEY_GO_TRASH="t"
+export FFF_KEY_GO_TRASH="T"
 export FFF_KEY_REFRESH="e"
 
 ### File operations.
 
+export FFF_KEY_OPENIN="o"
+export FFF_KEY_OPEN_IN_NEW_TERM="O"
+
 export FFF_KEY_YANK="y"
 export FFF_KEY_MOVE="m"
+export FFF_KEY_REMOVE="r"
+export FFF_KEY_CREATE_ARCHIVE="a"
+export FFF_KEY_UNPACK_ARCHIVE="u"
+export FFF_KEY_SHRED="z"
 export FFF_KEY_TRASH="d"
 export FFF_KEY_LINK="s"
 export FFF_KEY_BULK_RENAME="b"
 
 export FFF_KEY_YANK_ALL="Y"
 export FFF_KEY_MOVE_ALL="M"
+export FFF_KEY_REMOVE_ALL="R"
+export FFF_KEY_CREATE_ARCHIVE_ALL="A"
+export FFF_KEY_UNPACK_ARCHIVE_ALL="U"
+export FFF_KEY_SHRED_ALL="Z"
 export FFF_KEY_TRASH_ALL="D"
 export FFF_KEY_LINK_ALL="S"
 export FFF_KEY_BULK_RENAME_ALL="B"
 
 export FFF_KEY_PASTE="p"
-export FFF_KEY_CLEAR="c"
+export FFF_KEY_CLEAR="C"
 
-export FFF_KEY_RENAME="r"
+export FFF_KEY_RENAME="c"
 export FFF_KEY_MKDIR="n"
 export FFF_KEY_MKFILE="f"
 export FFF_KEY_IMAGE="i" # display image with w3m-img

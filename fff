@@ -485,11 +485,33 @@ mark() {
 				z|Z) file_program=(shred_files) ;;
 
         # These are 'fff' functions.
+				a|A) file_program=(create_archive) ;;
+				u|U) file_program=(unpack_archive) ;;
         d|D) file_program=(trash) ;;
         b|B) file_program=(bulk_rename) ;;
     esac
 
     status_line
+}
+
+create_archive () {
+	cmd_line "archive name: "
+	
+	[[ -z "$cmd_reply" ]] &&
+		return
+
+	apack "$cmd_reply" "${@:1:$#-1}"
+	redraw full
+}
+
+uenpack_archive () {
+	cmd_line "unpack archive(s) to: "
+	
+	[[ -z "$cmd_reply" ]] &&
+		return
+
+	aunpack -X "$cmd_reply" "${@:1:$#-1}"
+	redraw full
 }
 
 shred_files() {
@@ -743,7 +765,6 @@ key() {
         # 'C' is what bash sees when the right arrow is pressed ('\e[C').
         # '' is what bash sees when the enter/return key is pressed.
         "${FFF_KEY_CHILD1:=l}"|\
-        "${FFF_KEY_CHILD2:=$'\e[C'}"|\
         "${FFF_KEY_CHILD3:=""}")
             open "${list[scroll]}"
         ;;
@@ -753,7 +774,6 @@ key() {
         # '\177' and '\b' are what bash sometimes sees when the backspace
         # key is pressed.
         "${FFF_KEY_PARENT1:=h}"|\
-        "${FFF_KEY_PARENT2:=$'\e[D'}"|\
         "${FFF_KEY_PARENT3:=$'\177'}"|\
         "${FFF_KEY_PARENT4:=$'\b'}")
             # If a search was done, clear the results and open the current dir.
@@ -770,7 +790,6 @@ key() {
         # Scroll down.
         # 'B' is what bash sees when the down arrow is pressed ('\e[B').
         "${FFF_KEY_SCROLL_DOWN1:=j}"|\
-        "${FFF_KEY_SCROLL_DOWN2:=$'\e[B'}")
             ((scroll < list_total)) && {
                 ((scroll++))
                 ((y < max_items)) && ((y++))
@@ -785,7 +804,6 @@ key() {
         # Scroll up.
         # 'A' is what bash sees when the up arrow is pressed ('\e[A').
         "${FFF_KEY_SCROLL_UP1:=k}"|\
-        "${FFF_KEY_SCROLL_UP2:=$'\e[A'}")
             # '\e[1L': Insert a line above the cursor.
             # '\e[A':  Move cursor up a line.
             ((scroll > 0)) && {
@@ -864,6 +882,8 @@ key() {
         "${FFF_KEY_MOVE:=m}"|\
         "${FFF_KEY_REMOVE:=r}"|\
         "${FFF_KEY_SHRED:=z}"|\
+        "${FFF_KEY_CREATE_ARCHIVE:=a}"|\
+        "${FFF_KEY_UNPACK_ARCHIVE:=u}"|\
         "${FFF_KEY_TRASH:=d}"|\
         "${FFF_KEY_LINK:=s}"|\
         "${FFF_KEY_BULK_RENAME:=b}")
@@ -874,6 +894,8 @@ key() {
         "${FFF_KEY_YANK_ALL:=Y}"|\
         "${FFF_KEY_MOVE_ALL:=M}"|\
         "${FFF_KEY_REMOVE_ALL:=R}"|\
+        "${FFF_KEY_CREATE_ARCHIVE_ALL:=A}"|\
+        "${FFF_KEY_UNPACK_ARCHIVE:=U}"|\
         "${FFF_KEY_SHRED_ALL:=Z}"|\
         "${FFF_KEY_TRASH_ALL:=D}"|\
         "${FFF_KEY_LINK_ALL:=S}"|\
@@ -929,6 +951,12 @@ key() {
                 else
                     cmd_line "warn: no write access to file."
                 fi
+        ;;
+
+        # Lists files in archives.
+        "${FFF_KEY_LISTS_ARCHIVE:=L}")
+                    als "${list[scroll]##*/}" | less
+										redraw full
         ;;
 
         # Open in.
@@ -1019,7 +1047,7 @@ key() {
         ;;
 
         # Go to trash.
-        "${FFF_KEY_GO_TRASH:=t}")
+        "${FFF_KEY_GO_TRASH:=T}")
             open "$FFF_TRASH"
         ;;
 
